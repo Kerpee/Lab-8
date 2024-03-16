@@ -1,17 +1,24 @@
 import cv2
-
+import numpy as np
+THRESHOLD = 0.6  # Вводим константу для обозначения соответствия с меткой
 cap = cv2.VideoCapture(0)
-label = cv2.imread('ref-point.jpg')
-illusory = cv2.ORB_create()
-keypoints, descrp = illusory.detectAndCompute(label, None)
-match_bf = cv2.BFMatcher(cv2.NORM_HAMMING2, crossCheck=True)
+template = cv2.imread('ref-point.jpg', 0)
+h, w = template.shape
 while True:
     ret, frame = cap.read()
-    keypoint_fr, descrp_fr = illusory.detectAndCompute(frame, None)
-    matches = match_bf.match(descrp, descrp_fr)
-    img_match = cv2.drawMatches(label, keypoints, frame, keypoint_fr, matches, None, flags=cv2.DrawMatchesFlags_DEFAULT)
-    cv2.imshow('Match', img_match)
-    if cv2.waitKey(1) & 0xff == ord('q'):
+    if not ret:  # Проверяется корректность считывание кадра
         break
+    gray_frame = cv2.cvtColor(frame, cv2.COLOR_RGB2GRAY)  # Приводим кадр в серый формат для более простого распознования объектов
+    res = cv2.matchTemplate(gray_frame, template, cv2.TM_CCOEFF_NORMED)
+
+    loc = np.where(res >= THRESHOLD)  # Заносим в массив расположение объекта, который совпадает с меткой
+    for pt in zip(*loc[::-1]):  # Проходимся по массиву для последующего обозначения метки на кадре
+        cv2.rectangle(frame, pt, (pt[0] + w, pt[1] + h), (0, 255, 255), 2)
+    cv2.imshow('Task2', frame)
+
+    key = cv2.waitKey(1)
+    if key == 27:  # На esc закрытие окна
+        break
+
 cap.release()
 cv2.destroyAllWindows()
