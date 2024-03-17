@@ -1,23 +1,24 @@
+# -*- coding: utf-8 -*-
 import cv2
 import numpy as np
-THRESHOLD = 0.6  # Вводим константу для обозначения соответствия с меткой
+THRESHOLD = 0.6  # Р’РІРѕРґРёРј РєРѕРЅСЃС‚Р°РЅС‚Сѓ РґР»СЏ РѕР±РѕР·РЅР°С‡РµРЅРёСЏ СЃРѕРѕС‚РІРµС‚СЃС‚РІРёСЏ РѕР±СЉРµРєС‚РѕРІ СЃ РјРµС‚РєРѕР№
 cap = cv2.VideoCapture(0)
 template = cv2.imread('ref-point.jpg', 0)
 h, w = template.shape
 while True:
     ret, frame = cap.read()
-    if not ret:  # Проверяется корректность считывание кадра
+    if not ret:  # РџСЂРѕРІРµСЂСЏРµС‚СЃСЏ РєРѕСЂСЂРµРєС‚РЅРѕСЃС‚СЊ СЃС‡РёС‚С‹РІР°РЅРёРµ РєР°РґСЂР°
         break
-    gray_frame = cv2.cvtColor(frame, cv2.COLOR_RGB2GRAY)  # Приводим кадр в серый формат для более простого распознования объектов
+    gray_frame = cv2.cvtColor(frame, cv2.COLOR_RGB2GRAY)  # РџРµСЂРµРІРѕРґ РєР°РґСЂР° РІ СЃРµСЂС‹Р№ С†РІРµС‚ РґР»СЏ Р±РѕР»РµРµ РїСЂРѕСЃС‚РѕРіРѕ СЂР°СЃРїРѕР·РЅР°РІР°РЅРёСЏ
     res = cv2.matchTemplate(gray_frame, template, cv2.TM_CCOEFF_NORMED)
 
-    loc = np.where(res >= THRESHOLD)  # Заносим в массив расположение объекта, который совпадает с меткой
-    for pt in zip(*loc[::-1]):  # Проходимся по массиву для последующего обозначения метки на кадре
-        cv2.rectangle(frame, pt, (pt[0] + w, pt[1] + h), (0, 255, 255), 2)
+    loc = np.where(res >= THRESHOLD)  # Р—Р°РЅРѕСЃРёРј РІ РјР°СЃСЃРёРІ СЂР°СЃРїРѕР»РѕР¶РµРЅРёРµ РѕР±СЉРµРєС‚Р°, РєРѕС‚РѕСЂС‹Р№ СЃРѕРІРїР°РґР°РµС‚ СЃ РјРµС‚РєРѕР№
+    for pt in zip(*loc[::-1]):  # РџСЂРѕС…РѕРґРёРјСЃСЏ РїРѕ РјР°СЃСЃРёРІСѓ РґР»СЏ РїРѕСЃР»РµРґСѓСЋС‰РµРіРѕ РѕР±РѕР·РЅР°С‡РµРЅРёСЏ РјРµС‚РєРё РЅР° РєР°РґСЂРµ
+        cv2.rectangle(frame, pt, (pt[0] + w, pt[1] + h), (0, 255, 0), 1)
     cv2.imshow('Task2', frame)
 
     key = cv2.waitKey(1)
-    if key == 27:  # На esc закрытие окна
+    if key == 27:  # РќР° esc Р·Р°РєСЂС‹С‚РёРµ РѕРєРЅР°
         break
 
 cap.release()

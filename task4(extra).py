@@ -21,7 +21,7 @@ while True:
         top_left_x, top_left_y = center_x - fly_w // 2, center_y - fly_h // 2  # Находим левый угол для вставки мухи
         frame[top_left_y:top_left_y + fly_h, top_left_x:top_left_x + fly_w, 0] = fly  # Вставляем в кадр муху,
         frame[top_left_y:top_left_y + fly_h, top_left_x:top_left_x + fly_w, 1] = fly
-        frame[top_left_y:top_left_y + fly_h, top_left_x:top_left_x + fly_w, 2] = fly  # Каналы необходимы для цвета
+        frame[top_left_y:top_left_y + fly_h, top_left_x:top_left_x + fly_w, 2] = fly  # Каналы нужны для верного цвета
     cv2.imshow('Fly', frame)
 
     key = cv2.waitKey(1)

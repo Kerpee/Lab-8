@@ -22,7 +22,7 @@ while True:
 
     loc = np.where(res >= THRESHOLD)
     for pt in zip(*loc[::-1]):
-        cv2.rectangle(frame, pt, (pt[0] + w, pt[1] + h), (0, 255, 255), 2)
+        cv2.rectangle(frame, pt, (pt[0] + w, pt[1] + h), (0, 255, 0), 1)
         coord(pt[0], pt[1])  # Перёдаем координаты в функцию
     cv2.imshow('Task3', frame)
 
