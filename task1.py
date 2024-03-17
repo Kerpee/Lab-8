@@ -1,4 +1,5 @@
+# -*- coding: utf-8 -*-
 import cv2
-image = cv2.imread('variant-2.png')
-blurred_image = cv2.GaussianBlur(image, (7, 7), 6)  # Выполняется разымытие по Гауссу
-cv2.imwrite('output.jpg',  blurred_image)
+image = cv2.imread('images/variant-2.png')
+blur_image = cv2.GaussianBlur(image, (7, 7), 6) # Р Р°Р·РјС‹С‚РёРµ РїРѕ Р“Р°СѓСЃСЃСѓ
+cv2.imwrite('elephant.jpg', blur_image)
