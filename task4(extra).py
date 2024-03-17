@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 import cv2
 import numpy as np
 THRESHOLD = 0.6
@@ -16,9 +17,11 @@ while True:
 
     loc = np.where(res >= THRESHOLD)
     for pt in zip(*loc[::-1]):
-        center_x, center_y = pt[0] + w // 2, pt[1] + h // 2  # Определяем центр метки на кадре
-        top_left_x, top_left_y = center_x - fly_w // 2, center_y - fly_h // 2  # Находим левый угол для вставки мухи
-        frame[top_left_y:top_left_y + fly_h, top_left_x:top_left_x + fly_w, 0] = fly  # Вставляем в кадр муху
+        center_x, center_y = pt[0] + w // 2, pt[1] + h // 2  # РћРїСЂРµРґРµР»СЏРµРј С†РµРЅС‚СЂ РјРµС‚РєРё РЅР° РєР°РґСЂРµ
+        top_left_x, top_left_y = center_x - fly_w // 2, center_y - fly_h // 2  # РќР°С…РѕРґРёРј Р»РµРІС‹Р№ СѓРіРѕР» РґР»СЏ РІСЃС‚Р°РІРєРё РјСѓС…Рё
+        frame[top_left_y:top_left_y + fly_h, top_left_x:top_left_x + fly_w, 0] = fly  # Р’СЃС‚Р°РІР»СЏРµРј РІ РєР°РґСЂ РјСѓС…Сѓ,
+        frame[top_left_y:top_left_y + fly_h, top_left_x:top_left_x + fly_w, 1] = fly
+        frame[top_left_y:top_left_y + fly_h, top_left_x:top_left_x + fly_w, 2] = fly  # РљР°РЅР°Р»С‹ РЅРµРѕР±С…РѕРґРёРјС‹ РґР»СЏ С†РІРµС‚Р°
     cv2.imshow('Fly', frame)
 
     key = cv2.waitKey(1)
